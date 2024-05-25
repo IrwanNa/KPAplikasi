@@ -3,8 +3,6 @@ import 'package:flutter_reservasi_app/screens/informasi_screen.dart';
 import 'package:flutter_reservasi_app/screens/reservasi_screen.dart';
 import 'package:flutter_reservasi_app/screens/video_screen.dart';
 import 'package:flutter_reservasi_app/screens/beranda_screen.dart';
-//import 'package:flutter_splash_screen/flutter_splash_screen.dart';
-//import 'package:flutter_reservasi_app/screens/splash_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -84,30 +82,4 @@ class _MyAppState extends State<MyHomePage> {
       ),
     );
   }
-  // final List<String> images = [
-  //   'images/logo.png',
-  //   'images/logo.png',
-  //   'images/logo.png',
-  // ];
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('Gambar Scroll'),
-  //     ),
-  //     body: ListView.builder(
-  //       itemCount: images.length,
-  //       itemBuilder: (context, index) {
-  //         return Padding(
-  //           padding: const EdgeInsets.all(8.0),
-  //           child: Image.asset(
-  //             images[index],
-  //             fit: BoxFit.cover,
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
 }
