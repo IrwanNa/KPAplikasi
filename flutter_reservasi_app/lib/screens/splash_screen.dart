@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reservasi_app/screens/home_page_screen.dart';
-import 'package:flutter_splash_screen/flutter_splash_screen.dart';
-import 'package:flutter_reservasi_app/screens/home_page_screen.dart';
+//import 'package:flutter_splash_screen/flutter_splash_screen.dart';
+//import 'package:flutter_reservasi_app/screens/home_page_screen.dart';
 
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({Key? key}) : super(key: key);
