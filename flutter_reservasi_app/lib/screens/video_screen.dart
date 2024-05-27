@@ -10,14 +10,14 @@ class video extends StatefulWidget {
 
 class _VideoScreenState extends State<video> {
   final List<String> videoPaths = [
-    'videos/1.mp4',
-    'videos/2.mp4',
-    'videos/1.mp4',
-    'videos/2.mp4',
+    'assets/videos/1.mp4',
+    'assets/videos/2.mp4',
+    'assets/videos/1.mp4',
+    'assets/videos/2.mp4',
   ];
 
   late PageController _pageController;
-  int _currentIndex = 0;
+  //int _currentIndex = 0;
 
   @override
   void initState() {
@@ -38,9 +38,7 @@ class _VideoScreenState extends State<video> {
       controller: _pageController,
       itemCount: videoPaths.length,
       onPageChanged: (index) {
-        setState(() {
-          _currentIndex = index;
-        });
+        setState(() {});
       },
       itemBuilder: (context, index) {
         return VideoPlayerItem(

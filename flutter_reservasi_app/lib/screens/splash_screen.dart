@@ -31,7 +31,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
           255, 8, 132, 12), // Warna latar belakang splash screen
       body: Center(
         child: Image.asset(
-          'images/logo.png', // Path gambar logo aplikasi
+          'assets/images/logo.png', // Path gambar logo aplikasi
           width: 200, // Lebar gambar
           height: 200, // Tinggi gambar
         ),

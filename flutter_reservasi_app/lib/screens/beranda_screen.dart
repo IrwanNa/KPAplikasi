@@ -7,10 +7,10 @@ class beranda extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> imgList = [
-      'images/img1.jpg',
-      'images/img2.jpg',
-      'images/img3.jpg',
-      'images/img4.jpg',
+      'assets/images/img1.jpg',
+      'assets/images/img2.jpg',
+      'assets/images/img3.jpg',
+      'assets/images/img4.jpg',
     ];
 
     // Daftar deskripsi yang berbeda-beda untuk setiap gambar
@@ -108,7 +108,7 @@ class beranda extends StatelessWidget {
                               border: Border.all(color: Colors.grey),
                             ),
                             child: Image.asset(
-                              'images/img$index.jpg',
+                              'assets/images/img$index.jpg',
                               fit: BoxFit.cover,
                             ),
                           ),

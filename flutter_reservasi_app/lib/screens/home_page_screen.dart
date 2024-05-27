@@ -42,7 +42,7 @@ class _MyAppState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Image.asset(
-                'images/logo.png',
+                'assets/images/logo.png',
                 height: 50,
               ),
               InkWell(
