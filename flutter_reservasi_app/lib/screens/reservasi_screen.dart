@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+//import 'package:flutter_reservasi_app/screens/beranda_screen.dart';
+import 'package:flutter_reservasi_app/screens/home_page_screen.dart';
+//import 'package:flutter_reservasi_app/api/cek_tiket.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class reservasi extends StatefulWidget {
   const reservasi({super.key});
@@ -10,8 +15,46 @@ class reservasi extends StatefulWidget {
 class _ReservasiScreenState extends State<reservasi> {
   int _jumlahTiketDewasa = 0;
   int _jumlahTiketBalita = 0;
-  final int _hargaTiketDewasa = 10000;
-  final int _hargaTiketBalita = 5000;
+  final _hargaTiketDewasa = 10000;
+  final _hargaTiketBalita = 5000;
+
+  Future<Map<String, int>> checkTicketAvailability() async {
+    final response = await http.post(
+      Uri.parse('http://127.0.0.1:8000/api/check-availability'),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return {
+        'dewasa': data['dewasa'],
+        'balita': data['balita'],
+      };
+    } else {
+      throw Exception('Maaf Tiket Sudah Habis');
+    }
+  }
+
+  void _showAvailabilityDialog(Map<String, int> availability) {
+    var context;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Ketersediaan Tiket'),
+          content: Text(
+              'Dewasa: ${availability['dewasa']} tiket\nBalita: ${availability['balita']} tiket'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,41 +210,40 @@ class _ReservasiScreenState extends State<reservasi> {
               ),
             ),
             Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green, // Warna tombol hijau
-                  ),
-                  onPressed: () {
-                    // Implementasi pengecekan ketersediaan tiket di database
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text('Lanjutkan Reservasi?'),
-                          content: Text(
-                              'Total Harga Dewasa: Rp. ${_jumlahTiketDewasa * _hargaTiketDewasa}\n'
-                              'Total Harga Balita: Rp. ${_jumlahTiketBalita * _hargaTiketBalita}'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('Ya'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  child: Text(
-                    'Lanjutkan',
-                    style: TextStyle(color: Colors.white, fontFamily: 'Nunito'),
-                  ),
-                ),
-              ],
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  final availability = await checkTicketAvailability();
+                  _showAvailabilityDialog(availability);
+                } catch (e) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Mohon Maaf'),
+                        content: Text('Tiket Sudah Terjual Habis'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MyHomePage()));
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+              child: Text('Lanjutkan',
+                  style: TextStyle(color: Colors.white, fontFamily: 'Nunito')),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              ),
             ),
           ],
         ),
