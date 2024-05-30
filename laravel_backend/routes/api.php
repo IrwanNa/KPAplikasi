@@ -8,4 +8,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/check-availability', [TicketController::class, 'checkAvailability']);
+Route::post('/check-availability', [TicketController::class, 'checkAvailability']);
+Route::post('/submit-reservation', [TicketController::class, 'submitReservation']);
+Route::post('/submit-payment', [TicketController::class, 'submitPayment']);

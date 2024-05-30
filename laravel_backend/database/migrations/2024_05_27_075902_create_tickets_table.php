@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('type'); // tipe tiket: dewasa/balita
-            $table->integer('stock'); // jumlah stok tiket
+            $table->string('type')->default('dewasa');
+            $table->integer('price')->default(15000);
+            $table->integer('stock');
+            $table->string('status')->default('available');
             $table->timestamps();
         });
     }
