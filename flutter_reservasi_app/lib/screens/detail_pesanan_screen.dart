@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_reservasi_app/screens/pembayaran_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -13,45 +14,46 @@ class DetailPesananScreen extends StatelessWidget {
   });
 
   final TextEditingController _nameController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final totalBayar = totalDewasaPrice;
 
     void _submitDetails() async {
-      if (_nameController.text.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Nama harus diisi')),
+      if (_formKey.currentState!.validate()) {
+        final response = await http.post(
+          Uri.parse('http://127.0.0.1:8000/api/submit-reservation'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'name': _nameController.text,
+            'dewasa': dewasaCount,
+            'totalBayar': totalBayar,
+          }),
         );
-        return;
-      }
 
-      final response = await http.post(
-        Uri.parse('http://127.0.0.1:8000/api/submit-reservation'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'name': _nameController.text,
-          'dewasa': dewasaCount,
-          'totalBayar': totalBayar,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        final result = jsonDecode(response.body);
-        if (result['status'] == 'success') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => pembayaran()),
-          );
+        if (response.statusCode == 200) {
+          final result = jsonDecode(response.body);
+          if (result['status'] == 'success') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PembayaranScreen(
+                        name: _nameController.text,
+                        dewasaCount: dewasaCount,
+                        totalDewasaPrice: totalDewasaPrice,
+                      )),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(result['message'])),
+            );
+          }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(result['message'])),
+            SnackBar(content: Text('Gagal mengirim data reservasi')),
           );
         }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Gagal mengirim data reservasi')),
-        );
       }
     }
 
@@ -70,47 +72,74 @@ class DetailPesananScreen extends StatelessWidget {
             fontFamily: 'Nunito',
             color: Colors.white,
             fontSize: 16,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  hintText: '',
-                  labelText: 'Reservasi Atas Nama',
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Isikan Reservasi Atas Nama Anda',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                keyboardType: TextInputType.name,
               ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Jumlah Tiket Dewasa: $dewasaCount',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            Text('Total Harga Tiket Dewasa: Rp. $totalDewasaPrice'),
-            Spacer(),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+              SizedBox(height: 8.0),
+              Container(
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    hintText: _nameController.text.isEmpty
+                        ? 'Reservasi Atas Nama'
+                        : '',
+                    labelText: _nameController.text.isEmpty
+                        ? ''
+                        : 'Reservasi Atas Nama',
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                  ),
+                  keyboardType: TextInputType.name,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z\s]*$')),
+                  ],
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Nama harus diisi';
+                    } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
+                      return 'Nama hanya boleh mengandung huruf';
+                    }
+                    return null;
+                  },
+                ),
               ),
-              onPressed: _submitDetails,
-              child: Text('Lanjutkan', style: TextStyle(fontSize: 16)),
-            ),
-          ],
+              SizedBox(height: 16),
+              Text(
+                'Jumlah Tiket Pesanan: $dewasaCount',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Text('Total Harga Tiket Pesanan: Rp. $totalDewasaPrice'),
+              Spacer(),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                ),
+                onPressed: _submitDetails,
+                child: Text('Lanjutkan', style: TextStyle(fontSize: 16)),
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
