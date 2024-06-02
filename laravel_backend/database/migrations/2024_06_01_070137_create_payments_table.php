@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('reservation_id');
+            $table->string('name');
+            $table->integer('jumlah');
+            $table->integer('totalBayar');
             $table->string('payment_method');
-            $table->string('proof_of_payment');
-            $table->string('status')->default('pending');
+            $table->string('buktiTransfer');
             $table->timestamps();
 
-            $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
-        });
+        //     $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
+         });
     }
 
     /**

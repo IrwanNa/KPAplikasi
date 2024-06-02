@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ticket;
+use App\Models\Visitor;
+use App\Models\Reservation;
+use App\Models\ReservationDetail;
+use App\Models\Payment;
 
 class TicketController extends Controller
 {
@@ -29,11 +33,40 @@ class TicketController extends Controller
 
     public function submitReservation(Request $request)
     {
-        $name = $request->input('name');
-        $dewasa = $request->input('dewasa');
-        $totalBayar = $request->input('totalBayar');
+        // validasi inputan
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'jumlah' => 'required|integer',
+            'totalBayar' => 'required|integer',
+        ]);
 
-        // Validasi data atau lakukan proses penyimpanan reservasi di database
+        // Ambil data dari input yang sudah divalidasi
+        $name = $validatedData['name'];
+        $phone = $validatedData['phone'];
+        $dewasa = $validatedData['jumlah'];
+        $totalBayar = $validatedData['totalBayar'];
+
+        // simpan dt ke tb visitor
+        $visitor = Visitor::create([
+        'name' => $name, 
+        'phone' => $phone
+    ]);
+
+        // simpan dt ke tb reservasi
+        $reservation = Reservation::create([
+            'visitor_id' => $visitor->id,
+            'total_price' => $totalBayar,
+            'status' => 'pending',
+        ]);
+
+        // simpan dt ke tb reservasi_detail
+        ReservationDetail::create([
+            'reservation_id' => $reservation->id,
+            'ticket_id' => 1, // misal ticket_id 1 utk'dewasa'
+            'quantity' => $dewasa,
+            'price' => 15000, // hrga per ticket
+        ]);
 
         return response()->json([
             'status' => 'success',
@@ -43,31 +76,30 @@ class TicketController extends Controller
 
     public function submitPayment(Request $request)
     {
-        $name = $request->input('name');
-        $dewasa = $request->input('dewasa');
-        $totalBayar = $request->input('totalBayar');
-
-        if ($request->hasFile('payment_proof')) {
-            $path = $request->file('payment_proof')->store('payment_proofs', 'public');
-
-            // Simpan data reservasi beserta bukti pembayaran ke database
-            Reservation::create([
-                'name' => $name,
-                'dewasa' => $dewasa,
-                'totalBayar' => $totalBayar,
-                'payment_proof' => $path,
-                'status' => 'waiting'
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'phone' => 'required',
+                'jumlah' => 'required|integer',
+                'totalBayar' => 'required|integer',
+                'payment_method' => 'required',
+                'buktiTransfer' => 'required|file',
             ]);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Bukti pembayaran berhasil diunggah. Menunggu validasi dari admin.',
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'Bukti pembayaran tidak ditemukan.',
-            ], 400);
+    
+            $buktiTransfer = $request->file('buktiTransfer')->store('bukti_transfer');
+    
+            Payment::create([
+                'name' => $validatedData['name'],
+                'jumlah' => $validatedData['jumlah'],
+                'totalBayar' => $validatedData['totalBayar'],
+                'payment_method' => $validatedData['payment_method'],
+                'buktiTransfer' => $buktiTransfer,
+            ]);
+            return response()->json(['message' => 'Bukti pembayaran berhasil diunggah'], 200);
+            
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['message' => 'Bukti transfer tidak terkirim'], 400);
         }
     }
-}
+ }
+

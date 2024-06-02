@@ -8,8 +8,6 @@ use Illuminate\Database\Seeder;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\DB;
 
-
-
 class TicketSeeder extends Seeder
 {
     /**
@@ -21,7 +19,7 @@ class TicketSeeder extends Seeder
         DB::table('tickets')->insert(
             [
                 'type' => 'dewasa',
-                'stock' => 200, // jumlah stok tiket dewasa
+                'stock' => 50, // jumlah stok tiket dewasa
                 'status' => 'available',
                 'created_at' => now(),
                 'updated_at' => now(),
