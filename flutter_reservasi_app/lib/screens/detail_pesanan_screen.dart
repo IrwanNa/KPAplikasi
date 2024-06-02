@@ -14,6 +14,7 @@ class DetailPesananScreen extends StatelessWidget {
   });
 
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -27,7 +28,8 @@ class DetailPesananScreen extends StatelessWidget {
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({
             'name': _nameController.text,
-            'dewasa': dewasaCount,
+            'phone': _phoneController.text,
+            'jumlah': dewasaCount,
             'totalBayar': totalBayar,
           }),
         );
@@ -40,6 +42,7 @@ class DetailPesananScreen extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => PembayaranScreen(
                         name: _nameController.text,
+                        phone: _phoneController.text,
                         dewasaCount: dewasaCount,
                         totalDewasaPrice: totalDewasaPrice,
                       )),
@@ -67,7 +70,7 @@ class DetailPesananScreen extends StatelessWidget {
           },
         ),
         title: Text(
-          'Detail Pembayaran Reservasi',
+          'Detail Identitas Reservasi',
           style: TextStyle(
             fontFamily: 'Nunito',
             color: Colors.white,
@@ -84,7 +87,7 @@ class DetailPesananScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Isikan Reservasi Atas Nama Anda',
+                'Isikan Reservasi Nama dan Telepon Anda',
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
@@ -117,7 +120,38 @@ class DetailPesananScreen extends StatelessWidget {
                     if (value == null || value.isEmpty) {
                       return 'Nama harus diisi';
                     } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
-                      return 'Nama hanya boleh mengandung huruf';
+                      return 'Nama hanya boleh mengandung angka';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              SizedBox(height: 16),
+              Container(
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextFormField(
+                  controller: _phoneController,
+                  decoration: InputDecoration(
+                    hintText:
+                        _phoneController.text.isEmpty ? 'Nomor Telepon' : '',
+                    labelText:
+                        _phoneController.text.isEmpty ? '' : 'Nomor Telepon',
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                  ),
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Nomor telepon harus diisi';
+                    } else if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                      return 'Nomor telepon hanya boleh mengandung huruf';
                     }
                     return null;
                   },
@@ -140,19 +174,6 @@ class DetailPesananScreen extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () {
-                // Tambahkan navigasi ke halaman lain
-              },
-              child: Text('Halaman Lain'),
-            ),
-          ],
         ),
       ),
     );

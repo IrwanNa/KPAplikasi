@@ -1,18 +1,18 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_reservasi_app/screens/tunggu_validasi_screen.dart';
-//import 'dart:html' as html;
+import 'package:flutter_reservasi_app/screens/home_page_screen.dart';
 import 'package:http/http.dart' as http;
-//import 'dart:convert';
 
 class PembayaranScreen extends StatefulWidget {
   final String name;
+  final String phone;
   final int dewasaCount;
   final int totalDewasaPrice;
 
   PembayaranScreen({
     required this.name,
+    required this.phone,
     required this.dewasaCount,
     required this.totalDewasaPrice,
   });
@@ -37,6 +37,42 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
     }
   }
 
+  void _showConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Konfirmasi"),
+          content: Text(
+            "Reservasi sedang divalidasi oleh admin, harap tunggu validasi melalui pesan WhatsApp.\nSambil menunggu Anda bisa menjelajahi aplikasi:)",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'nunito',
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Tutup dialog
+              },
+              child: Text("Tidak"),
+            ),
+            TextButton(
+              onPressed: () {
+                // Navigasi ke halaman baru untuk menunggu validasi
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                );
+              },
+              child: Text("Ya"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _submitPayment() async {
     if (_selectedFileBytes == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -45,14 +81,22 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
       return;
     }
 
-    // Lakukan pengiriman data ke backend di sini
+    if (_selectedPaymentMethod == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Harap pilih metode pembayaran')),
+      );
+      return;
+    }
+
     final request = http.MultipartRequest(
       'POST',
       Uri.parse('http://127.0.0.1:8000/api/submit-payment'),
     );
     request.fields['name'] = widget.name;
-    request.fields['dewasa'] = widget.dewasaCount.toString();
+    request.fields['phone'] = widget.phone;
+    request.fields['jumlah'] = widget.dewasaCount.toString();
     request.fields['totalBayar'] = widget.totalDewasaPrice.toString();
+    request.fields['payment_method'] = _selectedPaymentMethod!;
     request.files.add(http.MultipartFile.fromBytes(
       'buktiTransfer',
       _selectedFileBytes!,
@@ -62,13 +106,14 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
     final response = await request.send();
 
     if (response.statusCode == 200) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MenungguValidasiScreen()),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Bukti pembayaran berhasil diunggah')),
       );
+
+      _showConfirmationDialog(); // Tampilkan dialog konfirmasi
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Gagal mengirim data pembayaran')),
+        SnackBar(content: Text('Bukti transfer tidak terkirim')),
       );
     }
   }
@@ -77,7 +122,11 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pembayaran'),
+        title: Text(
+          'Pembayaran',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontFamily: 'Nunito', color: Colors.white),
+        ),
         backgroundColor: Colors.green,
       ),
       body: Padding(
@@ -101,7 +150,15 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Jumlah Tiket Dewasa:', style: TextStyle(fontSize: 16)),
+                Text('Nomor HP:', style: TextStyle(fontSize: 16)),
+                Text(widget.phone, style: TextStyle(fontSize: 16)),
+              ],
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Jumlah Tiket Dipesan:', style: TextStyle(fontSize: 16)),
                 Text('${widget.dewasaCount}', style: TextStyle(fontSize: 16)),
               ],
             ),
@@ -110,7 +167,8 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Total Harga:', style: TextStyle(fontSize: 16)),
-                Text('Rp. ${widget.totalDewasaPrice}', style: TextStyle(fontSize: 16)),
+                Text('Rp. ${widget.totalDewasaPrice}',
+                    style: TextStyle(fontSize: 16)),
               ],
             ),
             SizedBox(height: 16),
@@ -119,11 +177,35 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
+// Tambahkan baris dengan informasi rekening dan nomor DANA
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Transfer BRI', style: TextStyle(fontSize: 16)),
+                    Text('Rek : 424572359814683',
+                        style: TextStyle(fontSize: 16)),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('E-Wallet DANA', style: TextStyle(fontSize: 16)),
+                    Text('No : 087720368795', style: TextStyle(fontSize: 16)),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            //SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.green),
                   onPressed: () {
                     setState(() {
                       _selectedPaymentMethod = 'Transfer BRI';
@@ -132,7 +214,8 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                   child: Text('Transfer BRI'),
                 ),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.green),
                   onPressed: () {
                     setState(() {
                       _selectedPaymentMethod = 'DANA';
@@ -166,23 +249,31 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: _selectedFileBytes == null
-                    ? Center(child: Text('Klik untuk mengunggah bukti transfer'))
+                    ? Center(
+                        child: Text('Klik untuk mengunggah bukti transfer'))
                     : Center(child: Text('File: $_selectedFileName')),
               ),
             ),
             Spacer(),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-              ),
-              onPressed: _selectedFileBytes != null ? _submitPayment : null,
-              child: Text('Selesai', style: TextStyle(fontSize: 16)),
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Spacer(),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                  ),
+                  onPressed: _submitPayment,
+                  child:
+                      Text('Submit Pembayaran', style: TextStyle(fontSize: 16)),
+                ),
+                Spacer(),
+              ],
+            )
           ],
         ),
       ),
     );
   }
 }
-
