@@ -85,10 +85,22 @@ class TicketController extends Controller
                 'payment_method' => 'required',
                 'buktiTransfer' => 'required|file',
             ]);
-    
-            $buktiTransfer = $request->file('buktiTransfer')->store('bukti_transfer');
+
+             // Cari reservasi berdasarkan nama dan nomor telepon
+             $reservation = Reservation::whereHas('visitor', function ($query) use ($validatedData) {
+                $query->where('name', $validatedData['name'])
+                    ->where('phone', $validatedData['phone']);
+            })->first();
+
+            if (!$reservation) {
+                return response()->json(['message' => 'Reservasi tidak ditemukan'], 404);
+            }
+
+            // simpan bukti gbr ke db
+            $buktiTransfer = $request->file('buktiTransfer')->store('bukti_transfer', 'public');
     
             Payment::create([
+                'reservation_id' => $reservation->id,
                 'name' => $validatedData['name'],
                 'jumlah' => $validatedData['jumlah'],
                 'totalBayar' => $validatedData['totalBayar'],

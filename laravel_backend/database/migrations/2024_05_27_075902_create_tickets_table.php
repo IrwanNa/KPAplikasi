@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('type')->default('dewasa');
             $table->integer('price')->default(15000);
-            $table->integer('stock');
+            $table->integer('stock')->default(0);
+            //$table->integer('stock');
             $table->string('status')->default('available');
             $table->timestamps();
         });

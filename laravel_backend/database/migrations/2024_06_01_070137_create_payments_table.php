@@ -13,6 +13,7 @@ return new class extends Migration
     {
          Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('reservation_id');
             $table->string('name');
             $table->integer('jumlah');
             $table->integer('totalBayar');
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->string('buktiTransfer');
             $table->timestamps();
 
-        //     $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
+            $table->foreign('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
          });
     }
 
