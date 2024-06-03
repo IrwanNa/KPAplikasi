@@ -25,6 +25,23 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Custom CSS -->
+        <style>
+            .navbar-custom {
+                background-color: #28a745;
+            }
+            .navbar-custom .navbar-brand img {
+                width: 40px;
+                height: auto;
+            }
+            .navbar-custom .nav-link {
+                color: #fff;
+            }
+            .navbar-custom .nav-link:hover {
+                color: #d4d4d4;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">

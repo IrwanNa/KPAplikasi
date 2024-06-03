@@ -46,4 +46,12 @@ class AdminTicketController extends Controller
 
         return redirect()->route('admin.reservations')->with('error', 'Reservasi Gagal.');
     }
+
+    public function dashboard()
+    {
+        $successfulReservations = Reservation::where('status', 'validated')->count();
+        $totalTicketStock = Ticket::sum('stock');
+
+        return view('admin.dashboard', compact('successfulReservations', 'totalTicketStock'));
+    }
 }
