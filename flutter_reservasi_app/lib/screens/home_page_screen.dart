@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reservasi_app/screens/informasi_screen.dart';
-import 'package:flutter_reservasi_app/screens/reservasi_screen.dart';
+import 'package:flutter_reservasi_app/screens/reservasi/reservasi_screen.dart';
 import 'package:flutter_reservasi_app/screens/video_screen.dart';
 import 'package:flutter_reservasi_app/screens/beranda_screen.dart';
 

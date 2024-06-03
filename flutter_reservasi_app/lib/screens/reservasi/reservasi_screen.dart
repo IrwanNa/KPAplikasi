@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reservasi_app/screens/detail_pesanan_screen.dart';
+import 'package:flutter_reservasi_app/screens/reservasi/detail_pesanan_screen.dart';
 import 'package:flutter_reservasi_app/screens/home_page_screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
