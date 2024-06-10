@@ -43,9 +43,9 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("Konfirmasi"),
-          content: Text(
+          content: const Text(
             "Reservasi sedang divalidasi oleh admin, harap tunggu validasi melalui pesan WhatsApp.\nSambil menunggu Anda bisa menjelajahi aplikasi:)",
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.justify,
             style: TextStyle(
               fontFamily: 'nunito',
             ),
@@ -142,7 +142,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Nama:', style: TextStyle(fontSize: 16)),
+                Text('Nama', style: TextStyle(fontSize: 16)),
                 Text(widget.name, style: TextStyle(fontSize: 16)),
               ],
             ),
@@ -150,7 +150,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Nomor HP:', style: TextStyle(fontSize: 16)),
+                Text('Nomor HP', style: TextStyle(fontSize: 16)),
                 Text(widget.phone, style: TextStyle(fontSize: 16)),
               ],
             ),
@@ -158,7 +158,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Jumlah Tiket Dipesan:', style: TextStyle(fontSize: 16)),
+                Text('Jumlah Tiket Dipesan', style: TextStyle(fontSize: 16)),
                 Text('${widget.dewasaCount}', style: TextStyle(fontSize: 16)),
               ],
             ),
@@ -166,7 +166,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Total Harga:', style: TextStyle(fontSize: 16)),
+                Text('Total Harga', style: TextStyle(fontSize: 16)),
                 Text('Rp. ${widget.totalDewasaPrice}',
                     style: TextStyle(fontSize: 16)),
               ],
@@ -266,7 +266,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                   ),
                   onPressed: _submitPayment,
                   child:
-                      Text('Submit Pembayaran', style: TextStyle(fontSize: 16)),
+                      Text('Selesai', style: TextStyle(fontSize: 16)),
                 ),
                 Spacer(),
               ],

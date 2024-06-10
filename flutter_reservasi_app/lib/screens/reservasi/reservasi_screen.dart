@@ -1,3 +1,6 @@
+//utk null safety di dart versi update
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:flutter_reservasi_app/screens/reservasi/detail_pesanan_screen.dart';
 import 'package:flutter_reservasi_app/screens/home_page_screen.dart';
