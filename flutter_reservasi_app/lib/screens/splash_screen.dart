@@ -1,7 +1,7 @@
+// ignore_for_file: library_private_types_in_public_api, use_super_parameters
+
 import 'package:flutter/material.dart';
 import 'package:flutter_reservasi_app/screens/home_page_screen.dart';
-//import 'package:flutter_splash_screen/flutter_splash_screen.dart';
-//import 'package:flutter_reservasi_app/screens/home_page_screen.dart';
 
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({Key? key}) : super(key: key);
@@ -15,11 +15,11 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   void initState() {
     super.initState();
     // Delay untuk menampilkan splash screen selama 3 detik
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 5), () {
       // Navigasi ke halaman utama aplikasi setelah splash screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MyHomePage()),
+        MaterialPageRoute(builder: (context) => const MyHomePage()),
       );
     });
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -42,7 +44,10 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Konfirmasi"),
+          title: const Text(
+            "Konfirmasi",
+            style: TextStyle(fontFamily: 'nunito'),
+          ),
           content: const Text(
             "Reservasi sedang divalidasi oleh admin, harap tunggu validasi melalui pesan WhatsApp.\nSambil menunggu Anda bisa menjelajahi aplikasi:)",
             textAlign: TextAlign.justify,
@@ -55,17 +60,18 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
               onPressed: () {
                 Navigator.of(context).pop(); // Tutup dialog
               },
-              child: Text("Tidak"),
+              child:
+                  const Text("Tidak", style: TextStyle(fontFamily: 'nunito')),
             ),
             TextButton(
               onPressed: () {
                 // Navigasi ke halaman baru untuk menunggu validasi
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                  MaterialPageRoute(builder: (context) => const MyHomePage()),
                 );
               },
-              child: Text("Ya"),
+              child: const Text("Ya", style: TextStyle(fontFamily: 'nunito')),
             ),
           ],
         );
@@ -76,14 +82,22 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
   void _submitPayment() async {
     if (_selectedFileBytes == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Harap unggah bukti transfer')),
+        const SnackBar(
+            content: Text(
+          'Harap unggah bukti transfer',
+          style: TextStyle(fontFamily: 'nunito'),
+        )),
       );
       return;
     }
 
     if (_selectedPaymentMethod == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Harap pilih metode pembayaran')),
+        const SnackBar(
+            content: Text(
+          'Harap pilih metode pembayaran',
+          style: TextStyle(fontFamily: 'nunito'),
+        )),
       );
       return;
     }
@@ -107,13 +121,21 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
 
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Bukti pembayaran berhasil diunggah')),
+        const SnackBar(
+            content: Text(
+          'Bukti pembayaran berhasil diunggah',
+          style: TextStyle(fontFamily: 'nunito'),
+        )),
       );
 
       _showConfirmationDialog(); // Tampilkan dialog konfirmasi
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Bukti transfer tidak terkirim')),
+        const SnackBar(
+            content: Text(
+          'Bukti transfer tidak terkirim',
+          style: TextStyle(fontFamily: 'nunito'),
+        )),
       );
     }
   }
@@ -122,7 +144,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Pembayaran',
           textAlign: TextAlign.center,
           style: TextStyle(fontFamily: 'Nunito', color: Colors.white),
@@ -134,72 +156,87 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Detail Pembayaran',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Nunito'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Nama', style: TextStyle(fontSize: 16)),
-                Text(widget.name, style: TextStyle(fontSize: 16)),
+                const Text('Nama',
+                    style: TextStyle(fontSize: 16, fontFamily: 'Nunito')),
+                Text(widget.name,
+                    style: const TextStyle(fontSize: 16, fontFamily: 'Nunito')),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Nomor HP', style: TextStyle(fontSize: 16)),
-                Text(widget.phone, style: TextStyle(fontSize: 16)),
+                const Text('Nomor HP',
+                    style: TextStyle(fontSize: 16, fontFamily: 'Nunito')),
+                Text(widget.phone,
+                    style: const TextStyle(fontSize: 16, fontFamily: 'Nunito')),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Jumlah Tiket Dipesan', style: TextStyle(fontSize: 16)),
-                Text('${widget.dewasaCount}', style: TextStyle(fontSize: 16)),
+                const Text('Jumlah Tiket Dipesan',
+                    style: TextStyle(fontSize: 16, fontFamily: 'Nunito')),
+                Text('${widget.dewasaCount}',
+                    style: const TextStyle(fontSize: 16, fontFamily: 'Nunito')),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Total Harga', style: TextStyle(fontSize: 16)),
+                const Text('Total Harga',
+                    style: TextStyle(fontSize: 16, fontFamily: 'Nunito')),
                 Text('Rp. ${widget.totalDewasaPrice}',
-                    style: TextStyle(fontSize: 16)),
+                    style: const TextStyle(fontSize: 16, fontFamily: 'Nunito')),
               ],
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Pilih Metode Pembayaran',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Nunito'),
             ),
-            SizedBox(height: 8),
-// Tambahkan baris dengan informasi rekening dan nomor DANA
-            Column(
+            const SizedBox(height: 8),
+            // Tambah baris dengan informasi rekening dan nomor DANA
+            const Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Transfer BRI', style: TextStyle(fontSize: 16)),
+                    Text('Transfer BRI',
+                        style: TextStyle(fontSize: 16, fontFamily: 'Nunito')),
                     Text('Rek : 424572359814683',
-                        style: TextStyle(fontSize: 16)),
+                        style: TextStyle(fontSize: 16, fontFamily: 'Nunito')),
                   ],
                 ),
                 SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('E-Wallet DANA', style: TextStyle(fontSize: 16)),
-                    Text('No : 087720368795', style: TextStyle(fontSize: 16)),
+                    Text('E-Wallet DANA',
+                        style: TextStyle(fontSize: 16, fontFamily: 'Nunito')),
+                    Text('No : 087720368795',
+                        style: TextStyle(fontSize: 16, fontFamily: 'Nunito')),
                   ],
                 ),
               ],
             ),
-            SizedBox(height: 16),
-            //SizedBox(height: 8),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -211,7 +248,8 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                       _selectedPaymentMethod = 'Transfer BRI';
                     });
                   },
-                  child: Text('Transfer BRI'),
+                  child: const Text('Transfer BRI',
+                      style: TextStyle(fontFamily: 'Nunito')),
                 ),
                 ElevatedButton(
                   style:
@@ -221,7 +259,8 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                       _selectedPaymentMethod = 'DANA';
                     });
                   },
-                  child: Text('E-wallet DANA'),
+                  child: const Text('E-wallet DANA',
+                      style: TextStyle(fontFamily: 'Nunito')),
                 ),
               ],
             ),
@@ -230,15 +269,21 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Text(
                   'Metode Pembayaran: $_selectedPaymentMethod',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Nunito'),
                 ),
               ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Unggah Bukti Transfer',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Nunito'),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             GestureDetector(
               onTap: _pickFile,
               child: Container(
@@ -249,26 +294,34 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: _selectedFileBytes == null
-                    ? Center(
-                        child: Text('Klik untuk mengunggah bukti transfer'))
-                    : Center(child: Text('File: $_selectedFileName')),
+                    ? const Center(
+                        child: Text(
+                        'Klik untuk mengunggah bukti transfer',
+                        style: TextStyle(fontFamily: 'Nunito'),
+                      ))
+                    : Center(
+                        child: Text(
+                        'File: $_selectedFileName',
+                        style: const TextStyle(fontFamily: 'Nunito'),
+                      )),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Spacer(),
+                const Spacer(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 16),
                   ),
                   onPressed: _submitPayment,
-                  child:
-                      Text('Selesai', style: TextStyle(fontSize: 16)),
+                  child: const Text('Selesai',
+                      style: TextStyle(fontSize: 16, fontFamily: 'Nunito')),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             )
           ],

@@ -1,5 +1,5 @@
 //utk null safety di dart versi update
-// ignore_for_file: unused_field
+// ignore_for_file: unused_field, camel_case_types, library_private_types_in_public_api, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_reservasi_app/screens/reservasi/detail_pesanan_screen.dart';
@@ -66,12 +66,15 @@ class _ReservasiScreenState extends State<reservasi> {
           content: Text(content),
           actions: [
             TextButton(
-              child: Text('OK'),
+              child: const Text(
+                'OK',
+                style: TextStyle(fontFamily: 'Nunito'),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
                 if (isError) {
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
+                      MaterialPageRoute(builder: (context) => const MyHomePage()));
                 } else {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -112,7 +115,7 @@ class _ReservasiScreenState extends State<reservasi> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
@@ -120,25 +123,28 @@ class _ReservasiScreenState extends State<reservasi> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Tiket Wisata Puncak Pinus',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Nunito'),
                   ),
-                  Text(
+                  const Text(
                     'Harga: Rp. 15.000',
                     style: TextStyle(fontFamily: 'Nunito'),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Jumlah Tiket: $_dewasaCount'),
+                      Text(
+                        'Jumlah Tiket: $_dewasaCount',
+                        style: const TextStyle(fontFamily: 'Nunito'),
+                      ),
                       Row(
                         children: [
                           IconButton(
-                            icon: Icon(Icons.remove),
+                            icon: const Icon(Icons.remove),
                             onPressed: () {
                               setState(() {
                                 if (_dewasaCount > 0) _dewasaCount--;
@@ -146,7 +152,7 @@ class _ReservasiScreenState extends State<reservasi> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(Icons.add),
+                            icon: const Icon(Icons.add),
                             onPressed: () {
                               setState(() {
                                 _dewasaCount++;
@@ -157,16 +163,19 @@ class _ReservasiScreenState extends State<reservasi> {
                       ),
                     ],
                   ),
-                  Text('Total Harga: Rp. ${_dewasaCount * 15000}'),
+                  Text(
+                    'Total Harga: Rp. ${_dewasaCount * 15000}',
+                    style: const TextStyle(fontFamily: 'Nunito'),
+                  ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
                 height: 32), // Menambahkan jarak antara Container dan tombol
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
               onPressed: _checkAvailability,
-              child: Text(
+              child: const Text(
                 'Lanjutkan',
                 style: TextStyle(fontFamily: 'Nunito', color: Colors.white),
               ),

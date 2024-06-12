@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, annotate_overrides, use_super_parameters, camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
@@ -13,6 +15,9 @@ class _VideoScreenState extends State<video> {
     'assets/videos/12.mp4',
     'assets/videos/11.mp4',
     'assets/videos/10.mp4',
+    'assets/videos/15.mp4',
+    'assets/videos/13.mp4',
+    'assets/videos/14.mp4',
     'assets/videos/9.mp4',
     'assets/videos/8.mp4',
     'assets/videos/5.mp4',
@@ -97,7 +102,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
         ? Chewie(
             controller: _chewieController!,
           )
-        : Center(
+        : const Center(
             child: CircularProgressIndicator(),
           );
   }

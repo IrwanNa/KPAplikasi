@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, no_leading_underscores_for_local_identifiers, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_reservasi_app/screens/reservasi/pembayaran_screen.dart';
@@ -54,7 +56,11 @@ class DetailPesananScreen extends StatelessWidget {
           }
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Gagal mengirim data reservasi')),
+            const SnackBar(
+                content: Text(
+              'Gagal mengirim data reservasi',
+              style: TextStyle(fontFamily: 'Nunito'),
+            )),
           );
         }
       }
@@ -64,12 +70,12 @@ class DetailPesananScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.green,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'Detail Identitas Reservasi',
           style: TextStyle(
             fontFamily: 'Nunito',
@@ -86,16 +92,17 @@ class DetailPesananScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Isikan Reservasi Nama dan Telepon Anda',
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
+                  fontFamily: 'Nunito',
                 ),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               Container(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(10),
@@ -109,8 +116,9 @@ class DetailPesananScreen extends StatelessWidget {
                     labelText: _nameController.text.isEmpty
                         ? ''
                         : 'Reservasi Atas Nama',
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                    hintStyle: const TextStyle(fontFamily: 'Nunito'),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 16.0),
                   ),
                   keyboardType: TextInputType.name,
                   inputFormatters: [
@@ -126,9 +134,9 @@ class DetailPesananScreen extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Container(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(10),
@@ -140,8 +148,9 @@ class DetailPesananScreen extends StatelessWidget {
                         _phoneController.text.isEmpty ? 'Nomor Telepon' : '',
                     labelText:
                         _phoneController.text.isEmpty ? '' : 'Nomor Telepon',
+                    hintStyle: const TextStyle(fontFamily: 'Nunito'),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                        const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                   ),
                   keyboardType: TextInputType.phone,
                   inputFormatters: [
@@ -157,20 +166,20 @@ class DetailPesananScreen extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 'Jumlah Tiket Pesanan: $dewasaCount',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'Nunito'),
               ),
               Text('Total Harga Tiket Pesanan: Rp. $totalDewasaPrice'),
-              Spacer(),
+              const Spacer(),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                 ),
                 onPressed: _submitDetails,
-                child: Text('Lanjutkan', style: TextStyle(fontSize: 16)),
+                child: const Text('Lanjutkan', style: TextStyle(fontSize: 16, fontFamily: 'Nunito')),
               ),
             ],
           ),

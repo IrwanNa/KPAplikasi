@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter_reservasi_app/screens/informasi_screen.dart';
 import 'package:flutter_reservasi_app/screens/reservasi/reservasi_screen.dart';
@@ -5,6 +7,8 @@ import 'package:flutter_reservasi_app/screens/video_screen.dart';
 import 'package:flutter_reservasi_app/screens/beranda_screen.dart';
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -47,7 +51,7 @@ class _MyAppState extends State<MyHomePage> {
               ),
               InkWell(
                 onTap: _navigateToHome,
-                child: Icon(Icons.confirmation_num_outlined),
+                child: const Icon(Icons.confirmation_num_outlined),
               ),
             ],
           ),
@@ -75,7 +79,7 @@ class _MyAppState extends State<MyHomePage> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Color.fromARGB(255, 16, 132, 10),
+          selectedItemColor: const Color.fromARGB(255, 16, 132, 10),
           unselectedItemColor: Colors.grey,
           onTap: _onItemTapped,
         ),

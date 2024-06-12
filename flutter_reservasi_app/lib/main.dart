@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_reservasi_app/screens/splash_screen.dart';
 
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: Scaffold(
+        home: const Scaffold(
           body: SplashScreenPage(),
         ));
   }

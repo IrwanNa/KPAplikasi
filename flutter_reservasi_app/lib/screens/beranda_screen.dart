@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, use_super_parameters
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -9,42 +11,48 @@ class beranda extends StatelessWidget {
     final List<String> imgList = [
       'assets/images/img1.jpg',
       'assets/images/img2.jpg',
-      'assets/images/img3.jpg',
+      'assets/images/img12.jpg',
       'assets/images/img4.jpg',
       'assets/images/img5.jpg',
       'assets/images/img6.jpg',
-      'assets/images/img7.jpg',
-      'assets/images/img8.jpg',
+      'assets/images/img11.jpg',
       'assets/images/img9.jpg',
+      'assets/images/img13.jpg',
       'assets/images/img10.jpg',
+      'assets/images/img7.jpg',
+      'assets/images/img3.jpg',
+      'assets/images/img8.jpg',
+      'assets/images/img14.jpg',
+      'assets/images/img15.jpg',
     ];
 
     // Daftar deskripsi yang berbeda-beda untuk setiap gambar
     final List<Map<String, String>> deskripsiList = [
       {
-        'title': 'Sky Bridge Puncak Pinus',
-        'description': 'Lintasi jembatan dengan ketinggian 2.500 meter.'
-      },
-      {
-        'title': 'Hutan Pinus Cikalongkulon',
-        'description': 'Nikmati keindahan alam di tengah hutan pinus.'
-      },
-      {
-        'title': 'Sunset di Puncak',
-        'description': 'Saksikan keindahan matahari terbenam di puncak.'
-      },
-      {
         'title': 'Camping Ground',
-        'description': 'Area camping yang nyaman dan aman.'
+        'description': 'Area Camping yang dekat dan aman.'
       },
       {
-        'title': 'Area Foto Pinus Cikalongkulon',
-        'description': 'Abadikan momen dengan kamera Anda.'
+        'title': 'Area Masuk Puncak Pinus',
+        'description': 'Menuju Pepohonan pinus yang rindang dan sejuk.'
       },
       {
-        'title': 'Candi Borobudur',
+        'title': 'Pepohonan Pinus',
+        'description': 'Nikmati segarnya udara hutan pinus.'
+      },
+      {
+        'title': 'Sunrise Puncak Pinus',
+        'description': 'Nikmati keindahan sunrise di Puncak Pinus.'
+      },
+      {
+        'title': 'Area Warung Makan',
         'description':
-            'Candi Borobudur adalah candi budha yang terletak di Cikalong.'
+            'Tidak perlu khawatir kelaparan karena tersedia warung makan.'
+      },
+      {
+        'title': 'Area Kedai Puncak Pinus',
+        'description':
+            'Tersedia berbagai macam menu camilan yang enak dan lezat.'
       }
     ];
 
@@ -61,7 +69,7 @@ class beranda extends StatelessWidget {
             //         16), // Memberikan jarak antara slider pertama dan AppBar
             // Slider Gambar Pertama
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
+              margin: const EdgeInsets.symmetric(vertical: 10),
               child: CarouselSlider(
                 options: CarouselOptions(
                   height: 200.0,
@@ -72,10 +80,10 @@ class beranda extends StatelessWidget {
                 ),
                 items: imgList
                     .map((item) => Container(
-                          margin: EdgeInsets.all(5.0),
+                          margin: const EdgeInsets.all(5.0),
                           child: ClipRRect(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
+                                const BorderRadius.all(Radius.circular(5.0)),
                             child: Image.asset(item,
                                 fit: BoxFit.cover, width: 1000),
                           ),
@@ -83,12 +91,12 @@ class beranda extends StatelessWidget {
                     .toList(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Gambar Kedua non-slider dengan deskripsi di sebelah kiri bawah
             Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: const Text(
                 'Nikmati pemandangan alam pilihan Anda',
                 style: TextStyle(
                   fontFamily: 'Nunito',
@@ -97,10 +105,10 @@ class beranda extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // ListView.builder untuk gambar dan deskripsi
             ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount:
                   deskripsiList.length, // Total number of items in the grid
@@ -125,7 +133,7 @@ class beranda extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Expanded(
                         flex: 3,
                         child: Column(
@@ -134,14 +142,14 @@ class beranda extends StatelessWidget {
                           children: [
                             Text(
                               deskripsiList[index]['title']!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Nunito'),
                             ),
                             Text(
                               deskripsiList[index]['description']!,
-                              style: TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 14, fontFamily: 'Nunito'),
                             ),
                           ],
                         ),
@@ -151,7 +159,7 @@ class beranda extends StatelessWidget {
                 );
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
           ],
         ),
       ),
