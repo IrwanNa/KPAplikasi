@@ -19,7 +19,7 @@ class TicketSeeder extends Seeder
         DB::table('tickets')->insert(
             [
                 'type' => 'dewasa',
-                'stock' => 50, // jumlah stok tiket dewasa
+                'stock' => 200, // jumlah stok tiket
                 'status' => 'available',
                 'created_at' => now(),
                 'updated_at' => now(),
