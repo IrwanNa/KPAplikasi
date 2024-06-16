@@ -73,8 +73,8 @@ class _ReservasiScreenState extends State<reservasi> {
               onPressed: () {
                 Navigator.of(context).pop();
                 if (isError) {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => const MyHomePage()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const MyHomePage()));
                 } else {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -173,11 +173,16 @@ class _ReservasiScreenState extends State<reservasi> {
             const SizedBox(
                 height: 32), // Menambahkan jarak antara Container dan tombol
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+              ),
               onPressed: _checkAvailability,
               child: const Text(
                 'Lanjutkan',
-                style: TextStyle(fontFamily: 'Nunito', color: Colors.white),
+                style: TextStyle(
+                    fontFamily: 'Nunito', color: Colors.white, fontSize: 16),
               ),
             ),
           ],

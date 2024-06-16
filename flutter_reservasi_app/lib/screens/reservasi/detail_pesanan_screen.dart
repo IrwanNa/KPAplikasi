@@ -149,8 +149,8 @@ class DetailPesananScreen extends StatelessWidget {
                     labelText:
                         _phoneController.text.isEmpty ? '' : 'Nomor Telepon',
                     hintStyle: const TextStyle(fontFamily: 'Nunito'),
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 16.0),
                   ),
                   keyboardType: TextInputType.phone,
                   inputFormatters: [
@@ -169,17 +169,25 @@ class DetailPesananScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 'Jumlah Tiket Pesanan: $dewasaCount',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'Nunito'),
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Nunito'),
               ),
               Text('Total Harga Tiket Pesanan: Rp. $totalDewasaPrice'),
               const Spacer(),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                 ),
                 onPressed: _submitDetails,
-                child: const Text('Lanjutkan', style: TextStyle(fontSize: 16, fontFamily: 'Nunito')),
+                child: const Text('Lanjutkan',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Nunito',
+                        color: Colors.white)),
               ),
             ],
           ),

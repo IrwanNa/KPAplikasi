@@ -241,26 +241,38 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 16),
+                  ),
                   onPressed: () {
                     setState(() {
                       _selectedPaymentMethod = 'Transfer BRI';
                     });
                   },
                   child: const Text('Transfer BRI',
-                      style: TextStyle(fontFamily: 'Nunito')),
+                      style: TextStyle(
+                          fontFamily: 'Nunito',
+                          color: Colors.white,
+                          fontSize: 12)),
                 ),
                 ElevatedButton(
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 16),
+                  ),
                   onPressed: () {
                     setState(() {
                       _selectedPaymentMethod = 'DANA';
                     });
                   },
                   child: const Text('E-wallet DANA',
-                      style: TextStyle(fontFamily: 'Nunito')),
+                      style: TextStyle(
+                          fontFamily: 'Nunito',
+                          color: Colors.white,
+                          fontSize: 12)),
                 ),
               ],
             ),
@@ -270,9 +282,10 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                 child: Text(
                   'Metode Pembayaran: $_selectedPaymentMethod',
                   style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Nunito'),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Nunito',
+                  ),
                 ),
               ),
             const SizedBox(height: 16),
@@ -319,7 +332,10 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                   ),
                   onPressed: _submitPayment,
                   child: const Text('Selesai',
-                      style: TextStyle(fontSize: 16, fontFamily: 'Nunito')),
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Nunito',
+                          color: Colors.white)),
                 ),
                 const Spacer(),
               ],
