@@ -12,11 +12,11 @@ class video extends StatefulWidget {
 
 class _VideoScreenState extends State<video> {
   final List<String> videoPaths = [
-    'assets/videos/12.mp4',
     'assets/videos/11.mp4',
+    'assets/videos/12.mp4',
     'assets/videos/10.mp4',
     'assets/videos/15.mp4',
-    'assets/videos/13.mp4',
+    'assets/videos/7.mp4',
     'assets/videos/14.mp4',
     'assets/videos/9.mp4',
     'assets/videos/8.mp4',

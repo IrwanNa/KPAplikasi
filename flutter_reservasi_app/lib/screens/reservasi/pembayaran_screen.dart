@@ -84,7 +84,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text(
-          'Harap unggah bukti transfer',
+          'Harap pilih metode bayar dan unggah bukti transfer',
           style: TextStyle(fontFamily: 'nunito'),
         )),
       );
@@ -95,7 +95,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text(
-          'Harap pilih metode pembayaran',
+          'Harap unggah bukti transfer sesuai dengan metode bayar yang dipilih',
           style: TextStyle(fontFamily: 'nunito'),
         )),
       );
