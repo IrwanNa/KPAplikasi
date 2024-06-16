@@ -16,25 +16,25 @@ Route::get('/admin/reservations', function () {
     return view('admin.reservations');
 })->middleware(['auth', 'verified'])->name('admin.reservations');
 
-
+Route::get('/admin/tickets', function () {
+    return view('admin.tickets');
+})->middleware(['auth', 'verified'])->name('admin.tickets');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    //Route trima reservasi
     Route::get('/admin/reservations', [AdminTicketController::class, 'showReservations'])->name('admin.reservations');
     Route::post('/admin/reservations/{id}/validate', [AdminTicketController::class, 'validateReservation'])->name('admin.validateReservation');
 
+    // Rute tolak reservasi
     Route::post('/admin/reservations/{id}/reject', [AdminTicketController::class, 'rejectReservation'])->name('admin.rejectReservation');
     Route::get('/admin/dashboard', [AdminTicketController::class, 'dashboard'])->name('admin.dashboard');
 
+    // Rute tiket
+    Route::get('/admin/tickets', [AdminTicketController::class, 'showTickets'])->name('admin.tickets');
+    Route::post('/admin/tickets/add-stock', [AdminTicketController::class, 'addTicketStock'])->name('admin.tickets.addStock');
+    Route::post('/admin/tickets/reset-reservations', [AdminTicketController::class, 'resetReservations'])->name('admin.tickets.resetReservations');
+
 });
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/admin/reservations', [AdminController::class, 'showReservations'])->name('admin.reservations');
-//     Route::post('/admin/reservations/{id}/validate', [AdminController::class, 'validateReservation'])->name('admin.validateReservation');
-// });
-
 
 require __DIR__.'/auth.php';

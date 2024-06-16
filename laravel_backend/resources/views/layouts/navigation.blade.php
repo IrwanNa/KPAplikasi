@@ -21,6 +21,11 @@
                         {{ __('Reservasi') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.tickets')" :active="request()->routeIs('admin.tickets')">
+                        {{ __('Tiket') }}
+                    </x-nav-link>
+                </div>
                 
             </div>
 

@@ -31,7 +31,7 @@
                 <tr>
                     <td>{{ $reservation->visitor->name }}</td>
                     <td>{{ $reservation->visitor->phone }}</td>
-                    <td>{{ $reservation->payments->first()->payment_method ?? 'N/A' }}</td>
+                    <td>{{ $reservation->payments->first()->payment_method ?? 'Tidak Memilih' }}</td>
                     <td>
                         @if($reservation->payments->first() && $reservation->payments->first()->buktiTransfer)
                             <a href="#" data-toggle="modal" data-target="#imageModal{{ $reservation->id }}">
