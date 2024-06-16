@@ -56,29 +56,29 @@ class AdminTicketController extends Controller
     }
 
     public function showTickets()
-{
-    $tickets = Ticket::all();
-    return view('admin.tickets', compact('tickets'));
-}
+    {
+        $tickets = Ticket::all();
+        return view('admin.tickets', compact('tickets'));
+    }
 
-public function addTicketStock(Request $request)
-{
-    $request->validate([
-        'ticket_id' => 'required|exists:tickets,id',
-        'stock' => 'required|integer|min:1',
-    ]);
+    public function addTicketStock(Request $request)
+    {
+        $request->validate([
+            'ticket_id' => 'required|exists:tickets,id',
+            'stock' => 'required|integer|min:1',
+        ]);
 
-    $ticket = Ticket::find($request->ticket_id);
-    $ticket->stock += $request->stock;
-    $ticket->save();
+        $ticket = Ticket::find($request->ticket_id);
+        $ticket->stock += $request->stock;
+        $ticket->save();
 
-    return redirect()->route('admin.tickets')->with('success', 'Stok tiket berhasil ditambahkan.');
-}
+        return redirect()->route('admin.tickets')->with('success', 'Stok tiket berhasil ditambahkan');
+    }
 
-public function resetReservations()
-{
-    Reservation::where('status', 'validated')->update(['status' => 'reset']);
-    return redirect()->route('admin.tickets')->with('success', 'Reservasi berhasil direset.');
-}
+    public function resetReservations()
+    {
+        Reservation::where('status', 'validated')->update(['status' => 'reset']);
+        return redirect()->route('admin.tickets')->with('success', 'Reservasi berhasil direset');
+    }
 
 }
