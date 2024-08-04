@@ -20,6 +20,10 @@ Route::get('/admin/tickets', function () {
     return view('admin.tickets');
 })->middleware(['auth', 'verified'])->name('admin.tickets');
 
+Route::get('/admin/laporan', function () {
+    return view('admin.laporan');
+})->middleware(['auth', 'verified'])->name('admin.laporan');
+
 Route::middleware('auth')->group(function () {
 
     //Route trima reservasi
@@ -34,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/tickets', [AdminTicketController::class, 'showTickets'])->name('admin.tickets');
     Route::post('/admin/tickets/add-stock', [AdminTicketController::class, 'addTicketStock'])->name('admin.tickets.addStock');
     Route::post('/admin/tickets/reset-reservations', [AdminTicketController::class, 'resetReservations'])->name('admin.tickets.resetReservations');
+    // Rute laporan tiket
+    Route::get('/admin/laporan', [AdminTicketController::class, 'laporan'])->name('admin.laporan');
 
 });
 

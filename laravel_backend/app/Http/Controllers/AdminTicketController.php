@@ -81,4 +81,16 @@ class AdminTicketController extends Controller
         return redirect()->route('admin.tickets')->with('success', 'Reservasi berhasil direset');
     }
 
+    public function laporan(Request $request)
+    {
+
+        $reservations = Reservation::where('status', 'validated')
+                                    ->with('visitor') // Memastikan relasi visitor dimuat
+                                    ->get();
+    // Debug: Log hasil query
+    // \Log::info('Reservations:', $reservations->toArray());
+
+        return view('admin.laporan', compact('reservations'));
+    }
+
 }
