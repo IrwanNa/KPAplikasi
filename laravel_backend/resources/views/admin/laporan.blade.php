@@ -7,7 +7,7 @@
         <thead class="thead-light">
             <tr>
                 <th>No</th>
-                <th>Nama Pengunjung</th>
+                <th>Reservasi Atas Nama</th>
                 <th>No Telepon</th>
                 <th>Total Bayar</th>
                 <th>Status</th>
@@ -32,10 +32,10 @@
         </tbody>
     </table>
     <!-- Tambahkan tombol cetak PDF -->
-    {{-- <div class="text-right mt-3">
+    <div class="text-right mt-3">
         <a href="{{ route('admin.laporan.pdf') }}" class="btn btn-primary">
-            Cetak PDF
+            Cetak Laporan
         </a>
-    </div> --}}
+    </div>
 </div>
 @endsection

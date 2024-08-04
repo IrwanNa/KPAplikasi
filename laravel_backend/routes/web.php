@@ -24,6 +24,10 @@ Route::get('/admin/laporan', function () {
     return view('admin.laporan');
 })->middleware(['auth', 'verified'])->name('admin.laporan');
 
+Route::get('/admin/laporan/pdf', function () {
+    return view('admin.laporan_pdf');
+})->middleware(['auth', 'verified'])->name('admin.laporan.pdf');
+
 Route::middleware('auth')->group(function () {
 
     //Route trima reservasi
@@ -40,6 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/tickets/reset-reservations', [AdminTicketController::class, 'resetReservations'])->name('admin.tickets.resetReservations');
     // Rute laporan tiket
     Route::get('/admin/laporan', [AdminTicketController::class, 'laporan'])->name('admin.laporan');
+
+    // Route untuk export PDF
+    Route::get('/admin/laporan/pdf', [AdminTicketController::class, 'exportPDF'])->name('admin.laporan.pdf');
 
 });
 

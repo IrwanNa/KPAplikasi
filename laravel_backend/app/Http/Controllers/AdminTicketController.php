@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\Ticket;
+use PDF;
 
 class AdminTicketController extends Controller
 {
@@ -92,5 +93,22 @@ class AdminTicketController extends Controller
 
         return view('admin.laporan', compact('reservations'));
     }
+
+    // cetak pdf laporan
+    public function exportPDF(Request $request)
+    {
+
+        $reservations = Reservation::where('status', 'validated')
+                                    ->with('visitor')
+                                    ->get();
+
+        // Render PDF dengan view
+        $pdf = PDF::loadView('admin.laporan_pdf', compact('reservations'));
+
+        // Download PDF dengan nama file yang ditentukan
+        return $pdf->download('laporan_reservasi.pdf');
+    }
+
+
 
 }
