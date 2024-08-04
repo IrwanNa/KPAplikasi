@@ -29,7 +29,11 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
   Uint8List? _selectedFileBytes;
 
   Future<void> _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      // membatasi file hanya gambar
+      allowedExtensions: ['jpg', 'jpeg', 'png'],
+    );
 
     if (result != null) {
       setState(() {
